@@ -1,0 +1,257 @@
+,varied_param,step_index,param_measured,index_name,true_value,est_mean,hdi_lo,hdi_hi,divergences
+0,alpha_group_mu,0,alpha_group_mu,alpha_group_mu[NH],1.0,1.025,0.706,1.293,118
+1,alpha_group_mu,0,alpha_group_mu,alpha_group_mu[PH],1.0,0.978,0.695,1.212,118
+2,alpha_group_mu,0,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.087,0.01,0.143,118
+3,alpha_group_mu,0,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.065,0.012,0.132,118
+4,alpha_group_mu,0,beta_group_mu,beta_group_mu[NH],0.5,0.519,0.396,0.651,118
+5,alpha_group_mu,0,beta_group_mu,beta_group_mu[PH],0.5,0.568,0.43,0.702,118
+6,alpha_group_mu,0,beta_group_sigma,beta_group_sigma[NH],0.05,0.043,0.006,0.073,118
+7,alpha_group_mu,0,beta_group_sigma,beta_group_sigma[PH],0.05,0.07,0.034,0.098,118
+8,alpha_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.061,-0.365,0.235,118
+9,alpha_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.105,-0.212,0.366,118
+10,alpha_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.062,-0.321,0.184,118
+11,alpha_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.004,-0.258,0.271,118
+12,alpha_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.018,-0.149,0.113,118
+13,alpha_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.09,-0.218,0.044,118
+14,alpha_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.021,-0.162,0.111,118
+15,alpha_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.053,-0.19,0.085,118
+16,alpha_group_mu,1,alpha_group_mu,alpha_group_mu[NH],2.0,1.818,1.537,2.135,20
+17,alpha_group_mu,1,alpha_group_mu,alpha_group_mu[PH],2.0,1.69,1.446,2.009,20
+18,alpha_group_mu,1,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.115,0.007,0.194,20
+19,alpha_group_mu,1,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.077,0.007,0.162,20
+20,alpha_group_mu,1,beta_group_mu,beta_group_mu[NH],0.5,0.554,0.419,0.682,20
+21,alpha_group_mu,1,beta_group_mu,beta_group_mu[PH],0.5,0.599,0.489,0.757,20
+22,alpha_group_mu,1,beta_group_sigma,beta_group_sigma[NH],0.05,0.033,0.002,0.053,20
+23,alpha_group_mu,1,beta_group_sigma,beta_group_sigma[PH],0.05,0.055,0.035,0.071,20
+24,alpha_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,0.051,-0.242,0.32,20
+25,alpha_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.282,0.003,0.586,20
+26,alpha_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,0.126,-0.148,0.397,20
+27,alpha_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.208,-0.05,0.496,20
+28,alpha_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.03,-0.155,0.105,20
+29,alpha_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.085,-0.214,0.052,20
+30,alpha_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.045,-0.188,0.064,20
+31,alpha_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.068,-0.218,0.046,20
+32,alpha_group_mu,2,alpha_group_mu,alpha_group_mu[NH],4.0,3.304,3.038,3.624,3
+33,alpha_group_mu,2,alpha_group_mu,alpha_group_mu[PH],4.0,3.261,2.963,3.547,3
+34,alpha_group_mu,2,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.168,0.034,0.299,3
+35,alpha_group_mu,2,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.084,0.005,0.206,3
+36,alpha_group_mu,2,beta_group_mu,beta_group_mu[NH],0.5,0.574,0.459,0.698,3
+37,alpha_group_mu,2,beta_group_mu,beta_group_mu[PH],0.5,0.594,0.46,0.708,3
+38,alpha_group_mu,2,beta_group_sigma,beta_group_sigma[NH],0.05,0.035,0.016,0.052,3
+39,alpha_group_mu,2,beta_group_sigma,beta_group_sigma[PH],0.05,0.052,0.041,0.063,3
+40,alpha_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,0.391,0.109,0.68,3
+41,alpha_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.631,0.342,0.918,3
+42,alpha_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,0.428,0.137,0.711,3
+43,alpha_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.518,0.244,0.829,3
+44,alpha_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.042,-0.168,0.074,3
+45,alpha_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.072,-0.188,0.057,3
+46,alpha_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.05,-0.182,0.067,3
+47,alpha_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.061,-0.181,0.058,3
+48,beta_group_mu,0,alpha_group_mu,alpha_group_mu[NH],1.0,0.997,0.692,1.254,55
+49,beta_group_mu,0,alpha_group_mu,alpha_group_mu[PH],1.0,0.952,0.706,1.202,55
+50,beta_group_mu,0,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.09,0.019,0.153,55
+51,beta_group_mu,0,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.069,0.006,0.132,55
+52,beta_group_mu,0,beta_group_mu,beta_group_mu[NH],0.5,0.533,0.374,0.676,55
+53,beta_group_mu,0,beta_group_mu,beta_group_mu[PH],0.5,0.589,0.447,0.743,55
+54,beta_group_mu,0,beta_group_sigma,beta_group_sigma[NH],0.05,0.04,0.005,0.071,55
+55,beta_group_mu,0,beta_group_sigma,beta_group_sigma[PH],0.05,0.067,0.03,0.096,55
+56,beta_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.055,-0.318,0.252,55
+57,beta_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.121,-0.148,0.415,55
+58,beta_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.046,-0.305,0.2,55
+59,beta_group_mu,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.014,-0.234,0.274,55
+60,beta_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.019,-0.157,0.133,55
+61,beta_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.098,-0.248,0.053,55
+62,beta_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.037,-0.188,0.118,55
+63,beta_group_mu,0,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.064,-0.209,0.089,55
+64,beta_group_mu,1,alpha_group_mu,alpha_group_mu[NH],1.0,1.034,0.786,1.273,8
+65,beta_group_mu,1,alpha_group_mu,alpha_group_mu[PH],1.0,0.986,0.625,1.259,8
+66,beta_group_mu,1,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.087,0.016,0.137,8
+67,beta_group_mu,1,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.07,0.013,0.123,8
+68,beta_group_mu,1,beta_group_mu,beta_group_mu[NH],0.9,0.879,0.721,1.007,8
+69,beta_group_mu,1,beta_group_mu,beta_group_mu[PH],0.9,0.909,0.783,1.052,8
+70,beta_group_mu,1,beta_group_sigma,beta_group_sigma[NH],0.05,0.045,0.008,0.07,8
+71,beta_group_mu,1,beta_group_sigma,beta_group_sigma[PH],0.05,0.068,0.044,0.091,8
+72,beta_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.065,-0.297,0.18,8
+73,beta_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.091,-0.164,0.328,8
+74,beta_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.015,-0.329,0.287,8
+75,beta_group_mu,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.023,-0.269,0.351,8
+76,beta_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,0.025,-0.113,0.176,8
+77,beta_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.048,-0.186,0.087,8
+78,beta_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,0.009,-0.131,0.14,8
+79,beta_group_mu,1,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.011,-0.151,0.121,8
+80,beta_group_mu,2,alpha_group_mu,alpha_group_mu[NH],1.0,1.006,0.708,1.247,2
+81,beta_group_mu,2,alpha_group_mu,alpha_group_mu[PH],1.0,0.951,0.703,1.189,2
+82,beta_group_mu,2,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.085,0.023,0.133,2
+83,beta_group_mu,2,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.079,0.01,0.128,2
+84,beta_group_mu,2,beta_group_mu,beta_group_mu[NH],1.2,1.166,1.032,1.315,2
+85,beta_group_mu,2,beta_group_mu,beta_group_mu[PH],1.2,1.188,1.05,1.32,2
+86,beta_group_mu,2,beta_group_sigma,beta_group_sigma[NH],0.05,0.046,0.022,0.072,2
+87,beta_group_mu,2,beta_group_sigma,beta_group_sigma[PH],0.05,0.067,0.043,0.088,2
+88,beta_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.039,-0.284,0.278,2
+89,beta_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.067,-0.188,0.361,2
+90,beta_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,0.018,-0.226,0.266,2
+91,beta_group_mu,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.057,-0.186,0.304,2
+92,beta_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,0.041,-0.104,0.179,2
+93,beta_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.01,-0.147,0.131,2
+94,beta_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,0.028,-0.111,0.161,2
+95,beta_group_mu,2,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,0.008,-0.141,0.135,2
+96,alpha_group_sigma,0,alpha_group_mu,alpha_group_mu[NH],1.0,1.019,0.74,1.306,70
+97,alpha_group_sigma,0,alpha_group_mu,alpha_group_mu[PH],1.0,0.915,0.653,1.166,70
+98,alpha_group_sigma,0,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.093,0.026,0.151,70
+99,alpha_group_sigma,0,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.075,0.01,0.134,70
+100,alpha_group_sigma,0,beta_group_mu,beta_group_mu[NH],0.5,0.528,0.393,0.69,70
+101,alpha_group_sigma,0,beta_group_mu,beta_group_mu[PH],0.5,0.614,0.441,0.776,70
+102,alpha_group_sigma,0,beta_group_sigma,beta_group_sigma[NH],0.05,0.041,0.007,0.071,70
+103,alpha_group_sigma,0,beta_group_sigma,beta_group_sigma[PH],0.05,0.063,0.02,0.09,70
+104,alpha_group_sigma,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.066,-0.351,0.195,70
+105,alpha_group_sigma,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.106,-0.174,0.371,70
+106,alpha_group_sigma,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.033,-0.313,0.232,70
+107,alpha_group_sigma,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.027,-0.261,0.281,70
+108,alpha_group_sigma,0,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.02,-0.161,0.116,70
+109,alpha_group_sigma,0,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.096,-0.24,0.034,70
+110,alpha_group_sigma,0,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.045,-0.215,0.1,70
+111,alpha_group_sigma,0,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.074,-0.241,0.077,70
+112,alpha_group_sigma,1,alpha_group_mu,alpha_group_mu[NH],1.0,1.072,0.776,1.34,0
+113,alpha_group_sigma,1,alpha_group_mu,alpha_group_mu[PH],1.0,0.977,0.736,1.262,0
+114,alpha_group_sigma,1,alpha_group_sigma,alpha_group_sigma[NH],0.2,0.163,0.029,0.234,0
+115,alpha_group_sigma,1,alpha_group_sigma,alpha_group_sigma[PH],0.2,0.14,0.012,0.241,0
+116,alpha_group_sigma,1,beta_group_mu,beta_group_mu[NH],0.5,0.509,0.349,0.673,0
+117,alpha_group_sigma,1,beta_group_mu,beta_group_mu[PH],0.5,0.57,0.432,0.714,0
+118,alpha_group_sigma,1,beta_group_sigma,beta_group_sigma[NH],0.05,0.055,0.005,0.106,0
+119,alpha_group_sigma,1,beta_group_sigma,beta_group_sigma[PH],0.05,0.088,0.015,0.14,0
+120,alpha_group_sigma,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.083,-0.358,0.19,0
+121,alpha_group_sigma,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.063,-0.2,0.327,0
+122,alpha_group_sigma,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.055,-0.321,0.183,0
+123,alpha_group_sigma,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.029,-0.212,0.286,0
+124,alpha_group_sigma,1,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.026,-0.17,0.122,0
+125,alpha_group_sigma,1,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.084,-0.225,0.062,0
+126,alpha_group_sigma,1,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.028,-0.162,0.122,0
+127,alpha_group_sigma,1,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.068,-0.206,0.062,0
+128,alpha_group_sigma,2,alpha_group_mu,alpha_group_mu[NH],1.0,0.955,0.675,1.245,9
+129,alpha_group_sigma,2,alpha_group_mu,alpha_group_mu[PH],1.0,0.929,0.625,1.194,9
+130,alpha_group_sigma,2,alpha_group_sigma,alpha_group_sigma[NH],0.5,0.4,0.307,0.499,9
+131,alpha_group_sigma,2,alpha_group_sigma,alpha_group_sigma[PH],0.5,0.46,0.359,0.577,9
+132,alpha_group_sigma,2,beta_group_mu,beta_group_mu[NH],0.5,0.567,0.416,0.704,9
+133,alpha_group_sigma,2,beta_group_mu,beta_group_mu[PH],0.5,0.593,0.455,0.717,9
+134,alpha_group_sigma,2,beta_group_sigma,beta_group_sigma[NH],0.05,0.051,0.006,0.11,9
+135,alpha_group_sigma,2,beta_group_sigma,beta_group_sigma[PH],0.05,0.065,0.008,0.123,9
+136,alpha_group_sigma,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.01,-0.265,0.218,9
+137,alpha_group_sigma,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.041,-0.205,0.278,9
+138,alpha_group_sigma,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.019,-0.268,0.215,9
+139,alpha_group_sigma,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.003,-0.253,0.248,9
+140,alpha_group_sigma,2,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.066,-0.194,0.077,9
+141,alpha_group_sigma,2,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.08,-0.21,0.062,9
+142,alpha_group_sigma,2,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.04,-0.154,0.079,9
+143,alpha_group_sigma,2,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.047,-0.161,0.076,9
+144,delta_alpha_group_entity,0,alpha_group_mu,alpha_group_mu[NH],1.0,1.002,0.718,1.285,44
+145,delta_alpha_group_entity,0,alpha_group_mu,alpha_group_mu[PH],1.0,0.922,0.63,1.204,44
+146,delta_alpha_group_entity,0,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.083,0.017,0.142,44
+147,delta_alpha_group_entity,0,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.064,0.005,0.132,44
+148,delta_alpha_group_entity,0,beta_group_mu,beta_group_mu[NH],0.5,0.541,0.393,0.685,44
+149,delta_alpha_group_entity,0,beta_group_mu,beta_group_mu[PH],0.5,0.61,0.477,0.747,44
+150,delta_alpha_group_entity,0,beta_group_sigma,beta_group_sigma[NH],0.05,0.047,0.012,0.075,44
+151,delta_alpha_group_entity,0,beta_group_sigma,beta_group_sigma[PH],0.05,0.066,0.026,0.097,44
+152,delta_alpha_group_entity,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.069,-0.355,0.212,44
+153,delta_alpha_group_entity,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.116,-0.165,0.411,44
+154,delta_alpha_group_entity,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.034,-0.316,0.27,44
+155,delta_alpha_group_entity,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.028,-0.263,0.334,44
+156,delta_alpha_group_entity,0,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.023,-0.167,0.132,44
+157,delta_alpha_group_entity,0,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.106,-0.257,0.049,44
+158,delta_alpha_group_entity,0,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.046,-0.189,0.1,44
+159,delta_alpha_group_entity,0,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.077,-0.221,0.053,44
+160,delta_alpha_group_entity,1,alpha_group_mu,alpha_group_mu[NH],1.0,1.018,0.741,1.337,114
+161,delta_alpha_group_entity,1,alpha_group_mu,alpha_group_mu[PH],1.0,0.944,0.686,1.199,114
+162,delta_alpha_group_entity,1,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.085,0.011,0.147,114
+163,delta_alpha_group_entity,1,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.086,0.024,0.146,114
+164,delta_alpha_group_entity,1,beta_group_mu,beta_group_mu[NH],0.5,0.527,0.402,0.655,114
+165,delta_alpha_group_entity,1,beta_group_mu,beta_group_mu[PH],0.5,0.605,0.423,0.737,114
+166,delta_alpha_group_entity,1,beta_group_sigma,beta_group_sigma[NH],0.05,0.045,0.01,0.074,114
+167,delta_alpha_group_entity,1,beta_group_sigma,beta_group_sigma[PH],0.05,0.058,0.021,0.091,114
+168,delta_alpha_group_entity,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.2,0.067,-0.225,0.401,114
+169,delta_alpha_group_entity,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",-0.2,-0.044,-0.353,0.269,114
+170,delta_alpha_group_entity,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",-0.2,-0.199,-0.454,0.059,114
+171,delta_alpha_group_entity,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.2,0.191,-0.055,0.44,114
+172,delta_alpha_group_entity,1,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,0.013,-0.121,0.154,114
+173,delta_alpha_group_entity,1,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.134,-0.279,0.023,114
+174,delta_alpha_group_entity,1,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.061,-0.199,0.101,114
+175,delta_alpha_group_entity,1,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.067,-0.218,0.079,114
+176,delta_alpha_group_entity,2,alpha_group_mu,alpha_group_mu[NH],1.0,1.253,0.994,1.567,112
+177,delta_alpha_group_entity,2,alpha_group_mu,alpha_group_mu[PH],1.0,0.764,0.471,1.058,112
+178,delta_alpha_group_entity,2,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.095,0.013,0.158,112
+179,delta_alpha_group_entity,2,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.095,0.036,0.159,112
+180,delta_alpha_group_entity,2,beta_group_mu,beta_group_mu[NH],0.5,0.522,0.416,0.658,112
+181,delta_alpha_group_entity,2,beta_group_mu,beta_group_mu[PH],0.5,0.599,0.413,0.765,112
+182,delta_alpha_group_entity,2,beta_group_sigma,beta_group_sigma[NH],0.05,0.037,0.006,0.064,112
+183,delta_alpha_group_entity,2,beta_group_sigma,beta_group_sigma[PH],0.05,0.054,0.012,0.091,112
+184,delta_alpha_group_entity,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.5,0.108,-0.207,0.376,112
+185,delta_alpha_group_entity,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,-0.038,-0.362,0.225,112
+186,delta_alpha_group_entity,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,0.092,-0.211,0.359,112
+187,delta_alpha_group_entity,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",-0.5,-0.254,-0.519,0.024,112
+188,delta_alpha_group_entity,2,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,0.017,-0.108,0.14,112
+189,delta_alpha_group_entity,2,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.13,-0.273,-0.012,112
+190,delta_alpha_group_entity,2,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.015,-0.159,0.141,112
+191,delta_alpha_group_entity,2,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.097,-0.237,0.075,112
+192,sigma_0_group,0,alpha_group_mu,alpha_group_mu[NH],1.0,1.003,0.707,1.267,52
+193,sigma_0_group,0,alpha_group_mu,alpha_group_mu[PH],1.0,1.001,0.749,1.307,52
+194,sigma_0_group,0,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.087,0.017,0.141,52
+195,sigma_0_group,0,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.074,0.014,0.135,52
+196,sigma_0_group,0,beta_group_mu,beta_group_mu[NH],0.5,0.544,0.43,0.691,52
+197,sigma_0_group,0,beta_group_mu,beta_group_mu[PH],0.5,0.566,0.444,0.684,52
+198,sigma_0_group,0,beta_group_sigma,beta_group_sigma[NH],0.05,0.04,0.007,0.07,52
+199,sigma_0_group,0,beta_group_sigma,beta_group_sigma[PH],0.05,0.066,0.033,0.095,52
+200,sigma_0_group,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.065,-0.328,0.2,52
+201,sigma_0_group,0,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.115,-0.163,0.38,52
+202,sigma_0_group,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.026,-0.306,0.238,52
+203,sigma_0_group,0,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,-0.001,-0.295,0.257,52
+204,sigma_0_group,0,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.023,-0.151,0.106,52
+205,sigma_0_group,0,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.109,-0.236,0.013,52
+206,sigma_0_group,0,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.052,-0.179,0.075,52
+207,sigma_0_group,0,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.06,-0.189,0.067,52
+208,sigma_0_group,1,alpha_group_mu,alpha_group_mu[NH],1.0,0.991,0.705,1.361,50
+209,sigma_0_group,1,alpha_group_mu,alpha_group_mu[PH],1.0,0.921,0.65,1.208,50
+210,sigma_0_group,1,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.087,0.019,0.16,50
+211,sigma_0_group,1,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.073,0.009,0.146,50
+212,sigma_0_group,1,beta_group_mu,beta_group_mu[NH],0.5,0.55,0.383,0.71,50
+213,sigma_0_group,1,beta_group_mu,beta_group_mu[PH],0.5,0.621,0.435,0.809,50
+214,sigma_0_group,1,beta_group_sigma,beta_group_sigma[NH],0.05,0.044,0.009,0.078,50
+215,sigma_0_group,1,beta_group_sigma,beta_group_sigma[PH],0.05,0.064,0.022,0.1,50
+216,sigma_0_group,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.086,-0.376,0.22,50
+217,sigma_0_group,1,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.104,-0.183,0.413,50
+218,sigma_0_group,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.047,-0.331,0.23,50
+219,sigma_0_group,1,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,0.018,-0.256,0.317,50
+220,sigma_0_group,1,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.015,-0.164,0.144,50
+221,sigma_0_group,1,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.101,-0.252,0.052,50
+222,sigma_0_group,1,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.041,-0.205,0.109,50
+223,sigma_0_group,1,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.076,-0.22,0.083,50
+224,sigma_0_group,2,alpha_group_mu,alpha_group_mu[NH],1.0,0.933,0.586,1.265,752
+225,sigma_0_group,2,alpha_group_mu,alpha_group_mu[PH],1.0,0.766,0.524,1.137,752
+226,sigma_0_group,2,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.095,0.013,0.182,752
+227,sigma_0_group,2,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.103,0.026,0.17,752
+228,sigma_0_group,2,beta_group_mu,beta_group_mu[NH],0.5,0.53,0.347,0.857,752
+229,sigma_0_group,2,beta_group_mu,beta_group_mu[PH],0.5,0.699,0.527,0.928,752
+230,sigma_0_group,2,beta_group_sigma,beta_group_sigma[NH],0.05,0.032,0.005,0.09,752
+231,sigma_0_group,2,beta_group_sigma,beta_group_sigma[PH],0.05,0.06,0.01,0.107,752
+232,sigma_0_group,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,0.055,-0.272,0.279,752
+233,sigma_0_group,2,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.023,-0.174,0.373,752
+234,sigma_0_group,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.058,-0.342,0.192,752
+235,sigma_0_group,2,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,-0.029,-0.313,0.278,752
+236,sigma_0_group,2,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.049,-0.171,0.125,752
+237,sigma_0_group,2,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.009,-0.191,0.112,752
+238,sigma_0_group,2,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.012,-0.198,0.097,752
+239,sigma_0_group,2,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.013,-0.208,0.101,752
+240,sigma_0_group,3,alpha_group_mu,alpha_group_mu[NH],1.0,0.774,0.362,1.172,84
+241,sigma_0_group,3,alpha_group_mu,alpha_group_mu[PH],1.0,0.751,0.377,1.155,84
+242,sigma_0_group,3,alpha_group_sigma,alpha_group_sigma[NH],0.1,0.114,0.01,0.249,84
+243,sigma_0_group,3,alpha_group_sigma,alpha_group_sigma[PH],0.1,0.097,0.01,0.226,84
+244,sigma_0_group,3,beta_group_mu,beta_group_mu[NH],0.5,0.667,0.347,1.021,84
+245,sigma_0_group,3,beta_group_mu,beta_group_mu[PH],0.5,0.739,0.482,0.977,84
+246,sigma_0_group,3,beta_group_sigma,beta_group_sigma[NH],0.05,0.047,0.006,0.118,84
+247,sigma_0_group,3,beta_group_sigma,beta_group_sigma[PH],0.05,0.068,0.008,0.152,84
+248,sigma_0_group,3,delta_alpha_group_entity,"delta_alpha_group_entity[NH, object]",0.0,-0.09,-0.384,0.218,84
+249,sigma_0_group,3,delta_alpha_group_entity,"delta_alpha_group_entity[NH, human]",0.0,0.049,-0.252,0.359,84
+250,sigma_0_group,3,delta_alpha_group_entity,"delta_alpha_group_entity[PH, object]",0.0,-0.068,-0.378,0.221,84
+251,sigma_0_group,3,delta_alpha_group_entity,"delta_alpha_group_entity[PH, human]",0.0,-0.017,-0.357,0.26,84
+252,sigma_0_group,3,delta_beta_group_entity,"delta_beta_group_entity[NH, object]",0.0,-0.032,-0.199,0.145,84
+253,sigma_0_group,3,delta_beta_group_entity,"delta_beta_group_entity[NH, human]",0.0,-0.047,-0.211,0.126,84
+254,sigma_0_group,3,delta_beta_group_entity,"delta_beta_group_entity[PH, object]",0.0,-0.027,-0.214,0.142,84
+255,sigma_0_group,3,delta_beta_group_entity,"delta_beta_group_entity[PH, human]",0.0,-0.038,-0.199,0.139,84
