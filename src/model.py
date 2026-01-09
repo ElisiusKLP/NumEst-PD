@@ -67,7 +67,12 @@ def build_hierarchical(
     # Dimensions
     n_trials = len(y_obs)
     n_subjects = len(np.unique(subject_id))
-    n_groups = len(np.unique(s_param_ph))  # should be 2
+
+    # map subjects to groups for the hierarchy
+    subject_group_idx = np.array(s_param_ph, dtype='int32')     
+    # map data inputs to int32 for indexing
+    subject_id_idx = np.array(subject_id, dtype='int32')
+    entity_idx = np.array(entity, dtype='int32')
 
     # Build coords
     coords = {
@@ -76,79 +81,251 @@ def build_hierarchical(
         "group": np.array(["NH", "PH"]),  # or use 0,1,2 if preferred
         "entity_type": ["object", "human"]
     }
-
-    # Map subjects to groups (s_param_ph is per subject)
-    # Ensure s_param_ph is aligned with subject index
-    subject_to_group = s_param_ph  # shape: (n_subjects,)
-    group_idx_per_trial = subject_to_group[subject_id]  # shape: (n_trials,)
-
-    entity = entity.astype(int)  # ensure integer
-
+    
     with pm.Model(coords=coords) as model:
-        # ---------- Group-level priors ----------
-        # Group-level hyperpriors for alpha (bias) and beta (compression)
-        alpha_group_mu = pm.Normal("alpha_group_mu", mu=1.0, sigma=0.3, dims="group")
-        alpha_group_sigma = pm.HalfNormal("alpha_group_sigma", sigma=0.2, dims="group")
+        # --- Data Containers ---
+        # Allows changing data for predictions later without rebuilding graph
+        subject_id_pt = pm.Data("subject_id_data", subject_id_idx, dims="trial")
+        entity_pt = pm.Data("entity_data", entity_idx, dims="trial")
+        n_stim_pt = pm.Data("n_stim_data", n_stim, dims="trial")
 
-        beta_group_mu = pm.Normal("beta_group_mu", mu=1.0, sigma=0.2, dims="group")
-        beta_group_sigma = pm.HalfNormal("beta_group_sigma", sigma=0.1, dims="group")
+        # --- 1. Alpha (Bias/Salience) ---
+        # Structure: Group x Entity -> Subject x Entity
+        # We assume different groups react to entities differently (Hypothesis check)
+        log_alpha_group = pm.Normal("log_alpha_group", mu=0.0, sigma=0.1, dims=("group", "entity_type"))
+        log_alpha_sigma = pm.HalfNormal("log_alpha_sigma", sigma=0.1, dims=("group", "entity_type"))
 
-        # ---------- Subject-level parameters ----------
-        # Each subject draws from their group's distribution
-        alpha_subj = pm.Normal(
-            "alpha_subj",
-            mu=alpha_group_mu[subject_to_group],
-            sigma=alpha_group_sigma[subject_to_group],
-            dims="subject"
+        # Subject level: dims=(subject, entity_type)
+        # Subjects are centered on THEIR group's mean for that entity
+        log_alpha_subj = pm.Normal(
+            "log_alpha_subj", 
+            mu=log_alpha_group[subject_group_idx, :], # Broadcasting group mean to subjects
+            sigma=log_alpha_sigma[subject_group_idx, :],
+            dims=("subject", "entity_type")
         )
+        
+        # Select specific alpha for each trial
+        log_alpha_trial = log_alpha_subj[subject_id_pt, entity_pt]
+
+        # --- 2. Beta (Compression/Priors) ---
+        # Structure: Group x Entity -> Subject x Entity
+        # THIS is where your "Strong Prior" hypothesis lives.
+        
+        beta_group = pm.Normal("beta_group", mu=1, sigma=0.1, dims=("group", "entity_type"))
+        beta_sigma = pm.HalfNormal("beta_sigma", sigma=0.05, dims=("group", "entity_type"))
+        
         beta_subj = pm.Normal(
             "beta_subj",
-            mu=beta_group_mu[subject_to_group],
-            sigma=beta_group_sigma[subject_to_group],
-            dims="subject"
+            mu=beta_group[subject_group_idx, :],
+            sigma=beta_sigma[subject_group_idx, :],
+            dims=("subject", "entity_type")
+        )
+        beta_trial = beta_subj[subject_id_pt, entity_pt]
+
+
+        # --- 3. Prediction (Power Law) ---
+        mu_hat_log = log_alpha_trial + beta_trial * at.log(n_stim_pt)
+        
+        # --- 4. Noise Model (Weber's Law) ---
+        # Sigma scales with magnitude (scalar variability)
+        # We let noise vary by Group (PH might be noisier)
+        sigma_group = pm.HalfNormal("sigma_group", sigma=0.1, dims="group")
+        
+        # Map group noise to trial
+        # Note: We index group by subject, then subject by trial
+        trial_group_idx = pm.Data("trial_group_idx", subject_group_idx[subject_id_idx], dims="trial")
+        sigma_trial = sigma_group[trial_group_idx]
+
+        # ---------- Set prior predictive node -------
+        y_pp = pm.LogNormal("y_pp", mu=mu_hat_log, sigma=sigma_trial, dims="trial")
+        y_pred_pp = pm.Deterministic("y_pred_pp", at.round(y_pp), dims="trial")
+
+        # --- 5. Likelihood (Discretized Normal) ---
+        # This handles the integer nature of the response (rounding)
+        dist = pm.LogNormal.dist(mu=mu_hat_log, sigma=sigma_trial)
+
+        # Safety: LogNormal is undefined for negative numbers.
+        # clip the lower bound for the CDF calculation.
+        lower_bound = at.maximum(y_obs - 0.5, 1e-4)
+        upper_bound = y_obs + 0.5
+
+        log_cdf_upper = pm.logcdf(dist, upper_bound)
+        log_cdf_lower = pm.logcdf(dist, lower_bound)
+        log_p = log_cdf_upper + at.log1p(-at.exp(log_cdf_lower - log_cdf_upper))
+        
+        pm.Potential("likelihood", at.sum(log_p))
+
+        # --- 6. Generated Quantities ---
+        pm.Deterministic("mu_hat_log", mu_hat_log, dims="trial")
+        
+        # Posterior predictive for checking model fit
+        y_log_latent = pm.LogNormal("y_latent", mu=mu_hat_log, sigma=sigma_trial, dims="trial")
+        pm.Deterministic("y_pred", at.round(y_log_latent), dims="trial")
+
+    return model
+
+def build_hierarchical_lnlik(
+    n_stim,
+    y_obs,
+    subject_id,
+    s_param_ph,  # subject-level: group id (0,1)
+    entity,      # trial-level: 0=object, 1=human
+    dose=None    # optional; not used here but kept for signature
+):
+    # Dimensions
+    n_trials = len(y_obs)
+    n_subjects = len(np.unique(subject_id))
+
+    # map subjects to groups for the hierarchy
+    subject_group_idx = np.array(s_param_ph, dtype='int32')     
+    # map data inputs to int32 for indexing
+    subject_id_idx = np.array(subject_id, dtype='int32')
+    entity_idx = np.array(entity, dtype='int32')
+
+    # Build coords
+    coords = {
+        "trial": np.arange(n_trials),
+        "subject": np.arange(n_subjects),
+        "group": np.array(["NH", "PH"]),  # or use 0,1,2 if preferred
+        "entity_type": ["object", "human"]
+    }
+    
+    with pm.Model(coords=coords) as model:
+        # --- Data Containers ---
+        # Allows changing data for predictions later without rebuilding graph
+        subject_id_pt = pm.Data("subject_id_data", subject_id_idx, dims="trial")
+        entity_pt = pm.Data("entity_data", entity_idx, dims="trial")
+        n_stim_pt = pm.Data("n_stim_data", n_stim, dims="trial")
+
+        # --- 1. Alpha (Bias/Salience) ---
+        # Structure: Group x Entity -> Subject x Entity
+        # We assume different groups react to entities differently (Hypothesis check)
+        log_alpha_group = pm.Normal("log_alpha_mu", mu=0.8, sigma=0.7, dims=("group", "entity_type"))
+        log_alpha_sigma = pm.HalfNormal("log_alpha_sigma", sigma=0.3, dims=("group", "entity_type"))
+
+        # Subject level: dims=(subject, entity_type)
+        # Subjects are centered on THEIR group's mean for that entity
+        log_alpha_subj = pm.Normal(
+            "log_alpha_subj", 
+            mu=log_alpha_group[subject_group_idx, :], # Broadcasting group mean to subjects
+            sigma=log_alpha_sigma[subject_group_idx, :],
+            dims=("subject", "entity_type")
+        )
+        
+        # Select specific alpha for each trial
+        log_alpha_trial = log_alpha_subj[subject_id_pt, entity_pt]
+
+        # --- 2. Beta (Compression/Priors) ---
+        # Structure: Group x Entity -> Subject x Entity
+        
+        beta_group = pm.Normal("beta_mu", mu=.98, sigma=0.1, dims=("group", "entity_type"))
+        beta_sigma = pm.HalfNormal("beta_sigma", sigma=0.1, dims=("group", "entity_type"))
+        
+
+        beta_subj = pm.Normal(
+            "beta_subj",
+            mu=beta_group[subject_group_idx, :],
+            sigma=beta_sigma[subject_group_idx, :],
+            dims=("subject", "entity_type")
+        )
+        beta_trial = beta_subj[subject_id_pt, entity_pt]
+
+
+        # --- 3. Prediction (Power Law) ---
+        mu_hat_log = log_alpha_trial + beta_trial * at.log(n_stim_pt)
+        
+        # --- 4. Noise Model (Weber's Law) ---
+        # Sigma scales with magnitude (scalar variability)
+        # We let noise vary by Group (PH might be noisier)
+        sigma_group = pm.HalfNormal("sigma_group", sigma=0.1, dims="group")
+        
+        # Map group noise to trial
+        # Note: We index group by subject, then subject by trial
+        trial_group_idx = pm.Data("trial_group_idx", subject_group_idx[subject_id_idx], dims="trial")
+        sigma_trial = sigma_group[trial_group_idx]
+
+        # --- 5. Likelihood (Discretized Normal) ---
+        # This handles the integer nature of the response (rounding)
+        y = pm.LogNormal(
+            "y",
+            mu=mu_hat_log,
+            sigma=sigma_trial,
+            observed=y_obs,
+            dims="trial"
         )
 
-        # ---------- Entity-Group interaction modulation (human vs object) ----------
-        # We model additional bias when estimating humans vs objects X NH vs PH
-        delta_alpha_group_entity = pm.Normal(
-            "delta_alpha_group_entity",
-            mu=0.0,
-            sigma=0.2,
-            dims=("group", "entity_type")
-        )
-        delta_beta_group_entity = pm.Normal(
-            "delta_beta_group_entity", 
-            mu=0.0, 
-            sigma=0.1, 
-            dims=("group", "entity_type")
-        )
+        # --- 6. Generated Quantities ---
+        pm.Deterministic("mu_hat_log", mu_hat_log, dims="trial")
+        
+        pm.Deterministic("y_pred", at.round(y), dims="trial")
 
-        # Index per trial: (n_trials,) → pulls (group, entity) pair
-        delta_alpha_trial = delta_alpha_group_entity[group_idx_per_trial, entity]
-        delta_beta_trial = delta_beta_group_entity[group_idx_per_trial, entity]
+    return model
 
-        # Combine subject + interaction effect
-        alpha_trial = alpha_subj[subject_id] + delta_alpha_trial
-        beta_trial = beta_subj[subject_id] + delta_beta_trial
+def build_hierarchical_with_prior(
+    n_stim,
+    y_obs,
+    subject_id,
+    s_param_ph,
+    entity,
+    dose=None
+):
+    n_trials = len(y_obs)
+    n_subjects = len(np.unique(subject_id))
+    
+    # Ensure strict integer types
+    subject_to_group_idx = np.array(s_param_ph, dtype='int32')
+    entity_idx = np.array(entity, dtype='int32')
+    subject_id_idx = np.array(subject_id, dtype='int32')
 
-        # ---------- Noise parameters (could also be hierarchical, but starting simple) ----------
-        sigma_0_group = pm.HalfNormal("sigma_0_group", sigma=1.0, dims="group")
-        sigma_1_group = pm.HalfNormal("sigma_1_group", sigma=0.3, dims="group")
+    coords = {
+        "trial": np.arange(n_trials),
+        "subject": np.arange(n_subjects),
+        "group": ["NH", "PH"],
+        "entity_type": ["object", "human"]
+    }
 
-        sigma_0_trial = sigma_0_group[group_idx_per_trial]
-        sigma_1_trial = sigma_1_group[group_idx_per_trial]
+    with pm.Model(coords=coords) as model:
+        # Data containers for graph stability
+        subject_id_pt = pm.Data("subject_id_data", subject_id_idx, dims="trial")
+        entity_pt = pm.Data("entity_data", entity_idx, dims="trial")
+        n_stim_pt = pm.Data("n_stim_data", n_stim, dims="trial")
+        
+        # 1. Internal Noise (w)
+        w_group = pm.HalfNormal("w_group", sigma=0.1, dims="group")
+        w_subj = pm.HalfNormal("w_subj", sigma=w_group[subject_to_group_idx], dims="subject")
+        w_trial = w_subj[subject_id_pt]
 
-        # ---------- Latent mean and std ----------
-        mu_hat = alpha_trial * at.power(n_stim, beta_trial)
-        sigma_hat = sigma_0_trial + sigma_1_trial * n_stim
+        # 2. Prior Parameter (Gamma)
+        gamma_group_entity = pm.Normal("gamma_group_entity", mu=1.0, sigma=0.5, dims=("group", "entity_type"))
+        gamma_subj_entity = pm.Normal("gamma_subj_entity", mu=gamma_group_entity[subject_to_group_idx], sigma=0.3, dims=("subject", "entity_type"))
+        gamma_trial = gamma_subj_entity[subject_id_pt, entity_pt]
 
-        pm.Deterministic("mu_hat", mu_hat, dims="trial")
-        pm.Deterministic("sigma_hat", sigma_hat, dims="trial")
+        # 3. Derive Beta
+        denom_raw = 1.0 + (w_trial**2) * gamma_trial
+        denom_safe = at.maximum(denom_raw, 0.05) 
+        beta_trial = 1.0 / denom_safe
+
+        # 4. Bias (Alpha)
+        log_alpha_group_entity = pm.Normal("log_alpha_group", mu=0.0, sigma=0.3, dims=["group", "entity_type"])
+        log_alpha_subj = pm.Normal("log_alpha_subj", mu=log_alpha_group_entity[subject_to_group_idx], sigma=0.2, dims=("subject", "entity_type"))
+        alpha_trial = at.exp(log_alpha_subj[subject_id_pt, entity_pt])
+
+        # 5. Prediction
+        mu_hat = alpha_trial * at.power(n_stim_pt, beta_trial)
+
+        # 6. Observation Noise
+        phi = pm.HalfNormal("phi", sigma=0.15, dims="group")
+        total_weber_trial = at.sqrt(w_trial**2 + phi[subject_to_group_idx[subject_id_idx]]**2)
+        
+        # FIX: Ensure sigma_hat is never exactly zero
+        sigma_hat = at.maximum(total_weber_trial * mu_hat, 1e-4)
 
         # ---------- Set prior predictive node -------
         y_pp = pm.Normal("y_pp", mu=mu_hat, sigma=sigma_hat, dims="trial")
         y_pred_pp = pm.Deterministic("y_pred_pp", at.round(y_pp), dims="trial")
 
+        # 7. Likelihood using CustomDist
+        # This allows observed=y_obs AND enables sample_posterior_predictive automatically
         # ---------- Discretized likelihood ----------
         dist = pm.Normal.dist(mu=mu_hat, sigma=sigma_hat)
         log_cdf_upper = pm.logcdf(dist, y_obs + 0.5)
@@ -161,116 +338,9 @@ def build_hierarchical(
         y_latent = pm.Normal("y_latent", mu=mu_hat, sigma=sigma_hat, dims="trial")
         pm.Deterministic("y_pred", at.round(y_latent), dims="trial")
 
-    return model
-
-def build_hierarchical_prior(
-    n_stim,
-    y_obs,
-    subject_id,
-    s_param_ph,  # subject-level: group id (0=NH, 1=PH)
-    entity,      # trial-level: 0=object, 1=human
-    dose=None    # optional; not used here
-):
-    # Dimensions
-    n_trials = len(y_obs)
-    n_subjects = len(np.unique(subject_id))
-    n_groups = len(np.unique(s_param_ph))  # should be 2
-
-    # Build coords
-    coords = {
-        "trial": np.arange(n_trials),
-        "subject": np.arange(n_subjects),
-        "group": np.array(["NH", "PH"]),
-        "entity_type": ["object", "human"]
-    }
-
-    # Map subjects to groups
-    subject_to_group = s_param_ph  # shape: (n_subjects,)
-    group_idx_per_trial = subject_to_group[subject_id]  # shape: (n_trials,)
-    entity = entity.astype(int)
-
-    with pm.Model(coords=coords) as model:
-        # ---------- Group-level priors for the prior exponent (alpha_prior) ----------
-        # Prior exponent controls internal belief: P(k) ∝ 1/k^alpha_prior
-        # Typical value: ~2.0 (from Cheyette & Piantadosi)
-        log_alpha_prior_group_mu = pm.Normal(
-            "log_alpha_prior_group_mu", mu=np.log(2.0), sigma=0.3, dims="group"
-        )
-        log_alpha_prior_group_sigma = pm.HalfNormal(
-            "log_alpha_prior_group_sigma", sigma=0.2, dims="group"
-        )
-
-        # ---------- Subject-level prior exponents ----------
-        log_alpha_prior_subj = pm.Normal(
-            "log_alpha_prior_subj",
-            mu=log_alpha_prior_group_mu[subject_to_group],
-            sigma=log_alpha_prior_group_sigma[subject_to_group],
-            dims="subject"
-        )
-        alpha_prior_subj = pm.Deterministic("alpha_prior_subj", at.exp(log_alpha_prior_subj))
-
-        # ---------- Entity-Group modulation of the prior exponent ----------
-        delta_log_alpha_prior = pm.Normal(
-            "delta_log_alpha_prior",
-            mu=0.0,
-            sigma=0.3,
-            dims=("group", "entity_type")
-        )
-        log_alpha_prior_trial = (
-            log_alpha_prior_subj[subject_id] 
-            + delta_log_alpha_prior[group_idx_per_trial, entity]
-        )
-        alpha_prior_trial = pm.Deterministic("alpha_prior_trial", at.exp(log_alpha_prior_trial))
-
-        alpha_trial = pm.Deterministic("alpha_scale", 2.0 / alpha_prior_trial)
-
-        # ---------- Beta (compression/expansion) remains as in original model ----------
-        beta_group_mu = pm.Normal("beta_group_mu", mu=1.0, sigma=0.2, dims="group")
-        beta_group_sigma = pm.HalfNormal("beta_group_sigma", sigma=0.1, dims="group")
-
-        beta_subj = pm.Normal(
-            "beta_subj",
-            mu=beta_group_mu[subject_to_group],
-            sigma=beta_group_sigma[subject_to_group],
-            dims="subject"
-        )
-
-        delta_beta_group_entity = pm.Normal(
-            "delta_beta_group_entity", 
-            mu=0.0, 
-            sigma=0.1, 
-            dims=("group", "entity_type")
-        )
-        delta_beta_trial = delta_beta_group_entity[group_idx_per_trial, entity]
-        beta_trial = beta_subj[subject_id] + delta_beta_trial
-
-        # ---------- Noise parameters ----------
-        sigma_0_group = pm.HalfNormal("sigma_0_group", sigma=1.0, dims="group")
-        sigma_1_group = pm.HalfNormal("sigma_1_group", sigma=0.3, dims="group")
-
-        sigma_0_trial = sigma_0_group[group_idx_per_trial]
-        sigma_1_trial = sigma_1_group[group_idx_per_trial]
-
-        # ---------- Latent mean and std ----------
-        mu_hat = alpha_trial * at.power(n_stim, beta_trial)
-        sigma_hat = sigma_0_trial + sigma_1_trial * n_stim
-
+        # Deterministics
         pm.Deterministic("mu_hat", mu_hat, dims="trial")
         pm.Deterministic("sigma_hat", sigma_hat, dims="trial")
-
-        # ---------- Prior predictive ----------
-        y_pp = pm.Normal("y_pp", mu=mu_hat, sigma=sigma_hat, dims="trial")
-        y_pred_pp = pm.Deterministic("y_pred_pp", at.round(y_pp), dims="trial")
-
-        # ---------- Discretized likelihood ----------
-        dist = pm.Normal.dist(mu=mu_hat, sigma=sigma_hat)
-        log_cdf_upper = pm.logcdf(dist, y_obs + 0.5)
-        log_cdf_lower = pm.logcdf(dist, y_obs - 0.5)
-        log_p = log_cdf_upper + at.log1p(-at.exp(log_cdf_lower - log_cdf_upper))
-        pm.Potential("likelihood", at.sum(log_p))
-
-        # ---------- Posterior predictive ----------
-        y_latent = pm.Normal("y_latent", mu=mu_hat, sigma=sigma_hat, dims="trial")
-        pm.Deterministic("y_pred", at.round(y_latent), dims="trial")
+        pm.Deterministic("beta_trial", beta_trial, dims="trial")
 
     return model
