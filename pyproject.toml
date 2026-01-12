@@ -5,9 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "dataframe-image>=0.2.7",
     "graphviz>=0.21",
     "ipywidgets>=8.1.8",
     "joblib>=1.5.3",
+    "kaleido>=1.2.0",
     "nbformat>=5.10.4",
     "numpy>=2.4.0",
     "pandas>=2.3.3",
