@@ -1,4 +1,5 @@
-
+# preprocess.py
+# Merges data sources into a dataset used for modelling
 import pandas as pd
 from pathlib import Path
 from src.utils import get_paths
