@@ -16,7 +16,7 @@ Code was run in jupyter notebooks. You find them in the directory /notebooks.
 
 ## Setup .venv (Virtual Environment)
 
-We use the pacakge manager **uv** to setup the virtual environment.
+I use the pacakge manager **uv** to setup the virtual environment.
 If you do not already have uv installed we refer to [https://docs.astral.sh/uv/getting-started/installation/]
 For example try, ``curl -LsSf https://astral.sh/uv/install.sh | sh`` or ``brew install uv``.
 
